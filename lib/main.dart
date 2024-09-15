@@ -12,11 +12,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return CalendarControllerProvider(
       controller: EventController(),
+
       child: MaterialApp(
         // Your initialization for material app.
         home: Scaffold(
-          body: MonthView(),
+          body: MonthView()
         )
+
       ),
     );
     //
