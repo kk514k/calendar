@@ -45,12 +45,14 @@ class AboutUsPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 8),
-            _buildTeamMember('John Doe', 'Lead Developer'),
-            _buildTeamMember('Jane Smith', 'UI/UX Designer'),
-            _buildTeamMember('Mike Johnson', 'Product Manager'),
+            _buildTeamMember('Joshua', 'Leader'),
+            _buildTeamMember('Thomas', 'Members'),
+            _buildTeamMember('Kitty', 'Members'),
+            _buildTeamMember('Matthew', 'Members'),
+            _buildTeamMember('Zenobio', 'Members'),
             SizedBox(height: 16),
             Text(
-              'Contact Us',
+              'More information:',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -58,7 +60,7 @@ class AboutUsPage extends StatelessWidget {
             ),
             SizedBox(height: 8),
             Text(
-              'Email: support@calendarapp.com\nPhone: (123) 456-7890',
+              'NA',
               style: TextStyle(fontSize: 16),
             ),
           ],
