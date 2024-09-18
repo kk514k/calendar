@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     _scheduleNotifications(); // Schedule notifications for existing events
   }
 
@@ -80,6 +80,7 @@ class _HomePageState extends State<HomePage>
           tabs: [
             Tab(text: 'Month'),
             Tab(text: 'Week'),
+            Tab(text: 'Day'),
           ],
         ),
       ),
@@ -127,6 +128,9 @@ class _HomePageState extends State<HomePage>
             onEventTap: (event, date) => _showEventDetails(context, [event]),
           ),
           WeekView(
+            onEventTap: (events, date) => _showEventDetails(context, events),
+          ),
+          DayView(
             onEventTap: (events, date) => _showEventDetails(context, events),
           ),
         ],
