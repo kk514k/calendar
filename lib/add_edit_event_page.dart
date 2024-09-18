@@ -52,11 +52,31 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Selected Date: ${_date.toString().split(' ')[0]}',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Row(
+                children: [
+                  Text(
+                    'Selected Date: ',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  TextButton(
+                    onPressed: () async {
+                      final newDate = await showDatePicker(
+                        context: context,
+                        initialDate: _date,
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2100),
+                      );
+                      if (newDate != null) {
+                        setState(() {
+                          _date = newDate;
+                        });
+                      }
+                    },
+                    child: Text('${_date.toString().split(' ')[0]}'),
+                  ),
+                ],
               ),
-              SizedBox(height: 16),
+
               TextFormField(
                 initialValue: widget.eventToEdit?.title ?? '',
                 decoration: InputDecoration(labelText: 'Event Title'),
