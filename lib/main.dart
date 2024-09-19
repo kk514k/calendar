@@ -3,6 +3,9 @@ import 'package:calendar_view/calendar_view.dart';
 import 'add_edit_event_page.dart';
 import 'about_us_page.dart';
 import 'notification_service.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +23,51 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Calendar App',
         theme: ThemeData(primarySwatch: Colors.blue),
-        home: HomePage(),
+        home: LandingPage(),
+      ),
+    );
+  }
+}
+
+class LandingPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/calendar_background.jpeg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AnimatedTextKit(
+                animatedTexts: [
+                  TypewriterAnimatedText(
+                    'Welcome to Your Calendar',
+                    textStyle: const TextStyle(
+                      fontSize: 32.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                    speed: const Duration(milliseconds: 100),
+                  ),
+                ],
+                totalRepeatCount: 1,
+                onFinished: () {
+                  Future.delayed(const Duration(seconds: 1), () {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
