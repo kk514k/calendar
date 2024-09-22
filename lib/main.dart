@@ -1,9 +1,11 @@
+import 'package:calendar/tips.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_view/calendar_view.dart';
 import 'add_edit_event_page.dart';
 import 'about_us_page.dart';
 import 'notification_service.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'map_page.dart';
 
 
 
@@ -162,6 +164,28 @@ class _HomePageState extends State<HomePage>
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => AboutUsPage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.question_answer),
+              title: Text('Tips'),
+              onTap: () {
+                Navigator.pop(context);  // Close the drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Tips()),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.question_answer),
+              title: Text('Maps'),
+              onTap: () {
+                Navigator.pop(context);  // Close the drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MapPage()),
                 );
               },
             ),
