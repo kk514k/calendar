@@ -2,6 +2,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 
 class NotificationService {
   static final NotificationService _notificationService = NotificationService._internal();
@@ -40,6 +42,34 @@ class NotificationService {
     tz.initializeTimeZones();
     final String? timeZoneName = await FlutterTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(timeZoneName!));
+
+    // Create the notification channel
+    const AndroidNotificationChannel channel = AndroidNotificationChannel(
+      'high_importance_channel',
+      'High Importance Notifications',
+      description: 'This channel is used for important notifications.',
+      importance: Importance.high,
+    );
+
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
+
+    // Request permissions
+    await requestPermissions();
+  }
+
+  Future<void> requestPermissions() async {
+    final status = await Permission.notification.request();
+    if (status.isGranted) {
+      print('Notification permission granted.');
+    } else if (status.isDenied) {
+      print('Notification permission denied.');
+    } else if (status.isPermanentlyDenied) {
+      print('Notification permission permanently denied. Please enable it in app settings.');
+      // Optionally, you can open the app settings:
+      // await openAppSettings();
+    }
   }
 
   Future selectNotification(String? payload) async {
@@ -47,25 +77,52 @@ class NotificationService {
   }
 
   Future<void> showNotification(int id, String title, String body, DateTime eventDate) async {
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-      id,
-      title,
-      body,
-      tz.TZDateTime.from(eventDate.subtract(Duration(days: 1)), tz.local),
-      const NotificationDetails(
-        android: AndroidNotificationDetails(
-          'your channel id',
-          'your channel name',
-          channelDescription: 'your channel description',
-          importance: Importance.max,
-          priority: Priority.high,
-          ticker: 'ticker',
+    if (await Permission.notification.isGranted) {
+      await flutterLocalNotificationsPlugin.zonedSchedule(
+        id,
+        title,
+        body,
+        tz.TZDateTime.from(eventDate.subtract(Duration(days: 1)), tz.local),
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            'high_importance_channel',
+            'High Importance Notifications',
+            channelDescription: 'This channel is used for important notifications.',
+            importance: Importance.high,
+            priority: Priority.high,
+            ticker: 'ticker',
+          ),
         ),
-      ),
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-    );
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      );
+    } else {
+      print('Notification permission not granted. Unable to show notification.');
+    }
   }
+
+  Future<void> showImmediateNotification(int id, String title, String body) async {
+    if (await Permission.notification.isGranted) {
+      await flutterLocalNotificationsPlugin.show(
+        id,
+        title,
+        body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            'high_importance_channel',
+            'High Importance Notifications',
+            channelDescription: 'This channel is used for important notifications.',
+            importance: Importance.high,
+            priority: Priority.high,
+            ticker: 'ticker',
+          ),
+        ),
+      );
+    } else {
+      print('Notification permission not granted. Unable to show notification.');
+    }
+  }
+
 
   Future<void> cancelNotification(int id) async {
     await flutterLocalNotificationsPlugin.cancel(id);
