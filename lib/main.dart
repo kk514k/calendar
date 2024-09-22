@@ -6,8 +6,7 @@ import 'about_us_page.dart';
 import 'notification_service.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'map_page.dart';
-
-
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -248,6 +247,8 @@ class _HomePageState extends State<HomePage>
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       Text(event.description ?? 'No description'),
                       Text(_formatEventTime(event)),
+                      if (event.event is Map<String, double>)
+                        Text('Location: ${(event.event as Map<String, double>)['latitude']}, ${(event.event as Map<String, double>)['longitude']}'),
                       Divider(),
                     ],
                   ))
@@ -300,8 +301,8 @@ class _HomePageState extends State<HomePage>
   }
 }
 
-List<CalendarEventData> _events = [
-  CalendarEventData(
+List<CalendarEventData<Object?>> _events = [
+  CalendarEventData<Object?>(
     date: DateTime.now(),
     title: "Project meeting",
     description: "Discuss project milestones and assign tasks.",
@@ -309,8 +310,9 @@ List<CalendarEventData> _events = [
         DateTime.now().year, DateTime.now().month, DateTime.now().day, 18, 30),
     endTime: DateTime(
         DateTime.now().year, DateTime.now().month, DateTime.now().day, 22),
+    event: {'latitude': 37.7749, 'longitude': -122.4194}, // Example coordinates for San Francisco
   ),
-  CalendarEventData(
+  CalendarEventData<Object?>(
     date: DateTime.now().add(Duration(days: 1)),
     title: "Team Lunch",
     description: "Monthly team bonding lunch at the nearby restaurant.",
@@ -318,6 +320,7 @@ List<CalendarEventData> _events = [
         DateTime.now().day + 1, 12, 0),
     endTime: DateTime(DateTime.now().year, DateTime.now().month,
         DateTime.now().day + 1, 13, 30),
+    event: {'latitude': 40.7128, 'longitude': -74.0060}, // Example coordinates for New York City
   ),
   // Add more sample events as needed
 ];
