@@ -43,6 +43,8 @@ dependencies:
   google_maps_flutter: ^2.9.0
   geocoding: ^3.0.0
   permission_handler: ^11.3.1
+  youtube_player_flutter: ^9.1.0
+
 
 
 dev_dependencies:
@@ -71,6 +73,10 @@ flutter:
   assets:
     - assets/calendar_background.jpeg
     - assets/images.jpeg
+    - assets/Ace.jpeg
+    - assets/Anti.jpeg
+    - assets/Aspirin.jpeg
+    - assets/Morphine.jpeg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

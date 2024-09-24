@@ -6,7 +6,7 @@ import 'about_us_page.dart';
 import 'notification_service.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'map_page.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

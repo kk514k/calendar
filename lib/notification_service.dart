@@ -4,10 +4,11 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-
 class NotificationService {
-  static final NotificationService _notificationService = NotificationService._internal();
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  static final NotificationService _notificationService =
+      NotificationService._internal();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   factory NotificationService() {
     return _notificationService;
@@ -17,23 +18,23 @@ class NotificationService {
 
   Future<void> init() async {
     final AndroidInitializationSettings initializationSettingsAndroid =
-    AndroidInitializationSettings('@mipmap/ic_launcher');  // Changed from 'app_icon'
-
+        AndroidInitializationSettings(
+            '@mipmap/ic_launcher'); // Changed from 'app_icon'
 
     final InitializationSettings initializationSettings =
-    InitializationSettings(
-        android: initializationSettingsAndroid,
-        macOS: null);
+        InitializationSettings(
+            android: initializationSettingsAndroid, macOS: null);
 
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onDidReceiveNotificationResponse: (NotificationResponse notificationResponse) {
+      onDidReceiveNotificationResponse:
+          (NotificationResponse notificationResponse) {
         switch (notificationResponse.notificationResponseType) {
           case NotificationResponseType.selectedNotification:
             selectNotification(notificationResponse.payload);
             break;
           case NotificationResponseType.selectedNotificationAction:
-          // Handle notification action
+            // Handle notification action
             break;
         }
       },
@@ -52,7 +53,8 @@ class NotificationService {
     );
 
     await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
     // Request permissions
@@ -66,7 +68,8 @@ class NotificationService {
     } else if (status.isDenied) {
       print('Notification permission denied.');
     } else if (status.isPermanentlyDenied) {
-      print('Notification permission permanently denied. Please enable it in app settings.');
+      print(
+          'Notification permission permanently denied. Please enable it in app settings.');
       // Optionally, you can open the app settings:
       // await openAppSettings();
     }
@@ -77,7 +80,8 @@ class NotificationService {
     } else if (status.isDenied) {
       print('Exact alarm permission denied. Falling back to inexact alarms.');
     } else if (status.isPermanentlyDenied) {
-      print('Exact alarm permission permanently denied. Please enable it in app settings.');
+      print(
+          'Exact alarm permission permanently denied. Please enable it in app settings.');
       // Optionally, you can open the app settings:
       // await openAppSettings();
     }
@@ -87,7 +91,8 @@ class NotificationService {
     // Handle notification tapped logic here
   }
 
-  Future<void> showNotification(int id, String title, String body, DateTime eventDate) async {
+  Future<void> showNotification(
+      int id, String title, String body, DateTime eventDate) async {
     if (await Permission.notification.isGranted) {
       tz.TZDateTime scheduledDate = tz.TZDateTime.from(
           eventDate.subtract(Duration(minutes: 1)), tz.local);
@@ -108,15 +113,16 @@ class NotificationService {
           android: AndroidNotificationDetails(
             'high_importance_channel',
             'High Importance Notifications',
-            channelDescription: 'This channel is used for important notifications.',
+            channelDescription:
+                'This channel is used for important notifications.',
             importance: Importance.max,
             priority: Priority.max,
             ticker: 'ticker',
           ),
         ),
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation
-            .absoluteTime,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
       );
       print('Notification scheduled for: ${scheduledDate.toString()}');
     } else {
@@ -125,7 +131,8 @@ class NotificationService {
     }
   }
 
-  Future<void> showImmediateNotification(int id, String title, String body) async {
+  Future<void> showImmediateNotification(
+      int id, String title, String body) async {
     if (await Permission.notification.isGranted) {
       await flutterLocalNotificationsPlugin.show(
         id,
@@ -135,7 +142,8 @@ class NotificationService {
           android: AndroidNotificationDetails(
             'high_importance_channel',
             'High Importance Notifications',
-            channelDescription: 'This channel is used for important notifications.',
+            channelDescription:
+                'This channel is used for important notifications.',
             importance: Importance.high,
             priority: Priority.high,
             ticker: 'ticker',
@@ -143,10 +151,10 @@ class NotificationService {
         ),
       );
     } else {
-      print('Notification permission not granted. Unable to show notification.');
+      print(
+          'Notification permission not granted. Unable to show notification.');
     }
   }
-
 
   Future<void> cancelNotification(int id) async {
     await flutterLocalNotificationsPlugin.cancel(id);
