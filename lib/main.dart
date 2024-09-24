@@ -306,20 +306,16 @@ List<CalendarEventData<Object?>> _events = [
     date: DateTime.now(),
     title: "Project meeting",
     description: "Discuss project milestones and assign tasks.",
-    startTime: DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day, 18, 30),
-    endTime: DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day, 22),
+    startTime: DateTime.now().add(Duration(minutes: 5)),
+    endTime: DateTime.now().add(Duration(minutes: 5, hours: 1)),
     event: {'latitude': 37.7749, 'longitude': -122.4194, 'name': ''}, // Example coordinates for San Francisco
   ),
   CalendarEventData<Object?>(
-    date: DateTime.now().add(Duration(days: 1)),
+    date: DateTime.now(),
     title: "Team Lunch",
     description: "Monthly team bonding lunch at the nearby restaurant.",
-    startTime: DateTime(DateTime.now().year, DateTime.now().month,
-        DateTime.now().day + 1, 12, 0),
-    endTime: DateTime(DateTime.now().year, DateTime.now().month,
-        DateTime.now().day + 1, 13, 30),
+    startTime: DateTime.now().add(Duration(minutes: 5)),
+    endTime: DateTime.now().add(Duration(minutes: 5, hours: 1)),
     event: {'latitude': 40.7128, 'longitude': -74.0060, 'name': ''}, // Example coordinates for New York City
   ),
   // Add more sample events as needed

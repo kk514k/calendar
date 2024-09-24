@@ -60,13 +60,24 @@ class NotificationService {
   }
 
   Future<void> requestPermissions() async {
-    final status = await Permission.notification.request();
+    PermissionStatus status = await Permission.notification.request();
     if (status.isGranted) {
       print('Notification permission granted.');
     } else if (status.isDenied) {
       print('Notification permission denied.');
     } else if (status.isPermanentlyDenied) {
       print('Notification permission permanently denied. Please enable it in app settings.');
+      // Optionally, you can open the app settings:
+      // await openAppSettings();
+    }
+
+    status = await Permission.scheduleExactAlarm.request();
+    if (status.isGranted) {
+      print('Exact alarm permission granted.');
+    } else if (status.isDenied) {
+      print('Exact alarm permission denied. Falling back to inexact alarms.');
+    } else if (status.isPermanentlyDenied) {
+      print('Exact alarm permission permanently denied. Please enable it in app settings.');
       // Optionally, you can open the app settings:
       // await openAppSettings();
     }
@@ -78,26 +89,39 @@ class NotificationService {
 
   Future<void> showNotification(int id, String title, String body, DateTime eventDate) async {
     if (await Permission.notification.isGranted) {
+      tz.TZDateTime scheduledDate = tz.TZDateTime.from(
+          eventDate.subtract(Duration(minutes: 1)), tz.local);
+
+      // Ensure the scheduled time is in the future
+      if (scheduledDate.isBefore(tz.TZDateTime.now(tz.local))) {
+        print('Scheduled time is in the past.');
+        return;
+        // scheduledDate = tz.TZDateTime.now(tz.local).add(Duration(minutes: 2));
+      }
+
       await flutterLocalNotificationsPlugin.zonedSchedule(
         id,
         title,
         body,
-        tz.TZDateTime.from(eventDate.subtract(Duration(days: 1)), tz.local),
+        scheduledDate,
         NotificationDetails(
           android: AndroidNotificationDetails(
             'high_importance_channel',
             'High Importance Notifications',
             channelDescription: 'This channel is used for important notifications.',
-            importance: Importance.high,
-            priority: Priority.high,
+            importance: Importance.max,
+            priority: Priority.max,
             ticker: 'ticker',
           ),
         ),
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation
+            .absoluteTime,
       );
+      print('Notification scheduled for: ${scheduledDate.toString()}');
     } else {
-      print('Notification permission not granted. Unable to show notification.');
+      print(
+          'Notification permission not granted. Unable to show notification.');
     }
   }
 
