@@ -48,7 +48,7 @@ class LandingPage extends StatelessWidget {
               AnimatedTextKit(
                 animatedTexts: [
                   TypewriterAnimatedText(
-                    'Welcome to Your Calendar',
+                    'Welcome to 理有病',
                     textStyle: const TextStyle(
                       fontSize: 32.0,
                       fontWeight: FontWeight.bold,
@@ -122,7 +122,7 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calendar App'),
+        title: Text('理有病'),
         bottom: TabBar(
           controller: _tabController,
           tabs: [
@@ -178,7 +178,7 @@ class _HomePageState extends State<HomePage>
               },
             ),
             ListTile(
-              leading: Icon(Icons.question_answer),
+              leading: Icon(Icons.map),
               title: Text('Maps'),
               onTap: () {
                 Navigator.pop(context);  // Close the drawer
@@ -306,16 +306,16 @@ List<CalendarEventData<Object?>> _events = [
     date: DateTime.now(),
     title: "Project meeting",
     description: "Discuss project milestones and assign tasks.",
-    startTime: DateTime.now().add(Duration(minutes: 5)),
-    endTime: DateTime.now().add(Duration(minutes: 5, hours: 1)),
+    startTime: DateTime.now().add(Duration(minutes: 2)),
+    endTime: DateTime.now().add(Duration(minutes: 2, hours: 1)),
     event: {'latitude': 37.7749, 'longitude': -122.4194, 'name': ''}, // Example coordinates for San Francisco
   ),
   CalendarEventData<Object?>(
     date: DateTime.now(),
     title: "Team Lunch",
     description: "Monthly team bonding lunch at the nearby restaurant.",
-    startTime: DateTime.now().add(Duration(minutes: 5)),
-    endTime: DateTime.now().add(Duration(minutes: 5, hours: 1)),
+    startTime: DateTime.now().add(Duration(minutes: 2)),
+    endTime: DateTime.now().add(Duration(minutes: 2, hours: 1)),
     event: {'latitude': 40.7128, 'longitude': -74.0060, 'name': ''}, // Example coordinates for New York City
   ),
   // Add more sample events as needed

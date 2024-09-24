@@ -32,7 +32,7 @@ class _TipsState extends State<Tips> {
       'imagePath': 'assets/Aspirin.jpeg',
       'subtitle': '神聖萬能藥, 痛痛飛走',
       'description': '阿斯匹靈最好保存在室溫，並避免陽光直射和受潮。為免藥品受損，請勿將它放在浴室或冰箱內。不少藥廠都有生產阿斯匹靈藥品，儲存需求各異，請務必檢視產品包裝上的說明，或者詢問藥師相關資訊。為了安全起見，應將藥品放在小孩和寵物搆不到的地方。此外，當藥品過期，或是不再使用時，除非藥品指示許可，否則請勿將阿斯匹靈丟入馬桶或倒進排水孔，應另詢藥師安全處理藥品的方法。',
-      'videoId': 'nEla5gQ6NL0', // Replace with actual Aspirin video ID
+      'videoId': 'BAoZN_VFSRQ', // Replace with actual Aspirin video ID
     },
     {
       'title': '嗎啡(Morphine)',
@@ -46,7 +46,7 @@ class _TipsState extends State<Tips> {
       'imagePath': 'assets/Anti.jpeg',
       'subtitle': '殺死希望或使人類停止繁殖',
       'description': '抗生素是用於治療和預防細菌感染的藥物，作用是殺死細菌或使細菌停止繁殖。抗生素可由微生物衍生出來或人工合成，但它們對於治療病毒感染，如流感或感冒，則沒有效果。',
-      'videoId': 'nEla5gQ6NL0', // Replace with actual Antibiotics video ID
+      'videoId': 'CSEhsxS3OTY', // Replace with actual Antibiotics video ID
     },
   ];
 
