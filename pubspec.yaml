@@ -77,6 +77,8 @@ flutter:
     - assets/Anti.jpeg
     - assets/Aspirin.jpeg
     - assets/Morphine.jpeg
+    - assets/fine.jpeg
+    - assets/good_time.jpg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

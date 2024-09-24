@@ -29,51 +29,67 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/calendar_background.jpeg'),
+            image: AssetImage('assets/good_time.jpg'),
             fit: BoxFit.cover,
           ),
         ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AnimatedTextKit(
-                animatedTexts: [
-                  TypewriterAnimatedText(
-                    'Welcome to 理有病',
-                    textStyle: const TextStyle(
-                      fontSize: 32.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+        child: Column(
+
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              flex: 2,
+              child: Column(
+
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 100.0),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          AnimatedTextKit(
+                            animatedTexts: [
+                              TyperAnimatedText(
+                                'Welcome to \n\n     理有病',
+                                textStyle: TextStyle(
+                                  fontSize: 32.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                                speed: const Duration(milliseconds: 100),
+                              ),
+                            ],
+                            totalRepeatCount: 1,
+                            onFinished: () {
+                              Future.delayed(const Duration(seconds: 1), () {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(builder: (context) => HomePage()),
+                                );
+                              });
+                            },
+                          ),
+                          SizedBox(height: 20),
+                          CircularProgressIndicator(),
+                        ],
+                      ),
                     ),
-                    speed: const Duration(milliseconds: 100),
                   ),
                 ],
-                totalRepeatCount: 1,
-                onFinished: () {
-                  Future.delayed(const Duration(seconds: 1), () {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => HomePage()),
-                    );
-                  });
-                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
