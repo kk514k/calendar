@@ -212,23 +212,23 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  void _navigateToAddEditEventPage(BuildContext context, DateTime selectedDate, {CalendarEventData? eventToEdit}) {
-    Navigator.push(
+  void _navigateToAddEditEventPage(BuildContext context, DateTime selectedDate, {CalendarEventData? eventToEdit}) async {
+    final newEvent = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => AddEditEventPage(selectedDate: selectedDate, eventToEdit: eventToEdit),
       ),
-    ).then((newEvent) {
-      if (newEvent != null) {
-        setState(() {});
-        if (eventToEdit != null) {
-          // Cancel the old notification
-          _notificationService.cancelNotification(eventToEdit.hashCode);
-        }
-        // Schedule notification for the new or updated event
-        _scheduleNotificationForEvent(newEvent);
+    );
+
+    if (newEvent != null) {
+      setState(() {});
+      if (eventToEdit != null) {
+        // Cancel the old notification
+        _notificationService.cancelNotification(eventToEdit.hashCode);
       }
-    });
+      // Schedule notification for the new or updated event
+      _scheduleNotificationForEvent(newEvent);
+    }
   }
 
   void _showEventDetails(
@@ -247,9 +247,9 @@ class _HomePageState extends State<HomePage>
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       Text(event.description ?? 'No description'),
                       Text(_formatEventTime(event)),
-                      if (event.event is Map<String, double>)
-                        Text('Location: ${(event.event as Map<String, double>)['latitude']}, ${(event.event as Map<String, double>)['longitude']}'),
+                      if (event.event is Map<String, dynamic>) Text('Location: ${(event.event as Map<String, dynamic>)['name']}'),
                       Divider(),
+
                     ],
                   ))
               .toList(),
@@ -310,7 +310,7 @@ List<CalendarEventData<Object?>> _events = [
         DateTime.now().year, DateTime.now().month, DateTime.now().day, 18, 30),
     endTime: DateTime(
         DateTime.now().year, DateTime.now().month, DateTime.now().day, 22),
-    event: {'latitude': 37.7749, 'longitude': -122.4194}, // Example coordinates for San Francisco
+    event: {'latitude': 37.7749, 'longitude': -122.4194, 'name': ''}, // Example coordinates for San Francisco
   ),
   CalendarEventData<Object?>(
     date: DateTime.now().add(Duration(days: 1)),
@@ -320,7 +320,7 @@ List<CalendarEventData<Object?>> _events = [
         DateTime.now().day + 1, 12, 0),
     endTime: DateTime(DateTime.now().year, DateTime.now().month,
         DateTime.now().day + 1, 13, 30),
-    event: {'latitude': 40.7128, 'longitude': -74.0060}, // Example coordinates for New York City
+    event: {'latitude': 40.7128, 'longitude': -74.0060, 'name': ''}, // Example coordinates for New York City
   ),
   // Add more sample events as needed
 ];

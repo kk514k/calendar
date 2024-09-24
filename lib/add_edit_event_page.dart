@@ -1,9 +1,7 @@
-// add_edit_event_page.dart
 import 'package:flutter/material.dart';
 import 'package:calendar_view/calendar_view.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'map_page.dart';
-
 
 class AddEditEventPage extends StatefulWidget {
   final DateTime selectedDate;
@@ -22,7 +20,7 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
   late DateTime _date;
   late TimeOfDay _startTime;
   late TimeOfDay _endTime;
-  // String? _locationName;
+  String? _locationName;
   LatLng? _locationCoords;
 
   @override
@@ -34,9 +32,10 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
       _date = widget.eventToEdit!.date;
       _startTime = TimeOfDay.fromDateTime(widget.eventToEdit!.startTime!);
       _endTime = TimeOfDay.fromDateTime(widget.eventToEdit!.endTime!);
-      if (widget.eventToEdit!.event is Map<String, double>) {
-        final Map<String, double> location = widget.eventToEdit!.event as Map<String, double>;
-        _locationCoords = LatLng(location['latitude']!, location['longitude']!);
+      if (widget.eventToEdit!.event is Map<String, dynamic>) {
+        final Map<String, dynamic> location = widget.eventToEdit!.event as Map<String, dynamic>;
+        _locationCoords = LatLng(location['latitude'] as double, location['longitude'] as double);
+        _locationName = location['name'] as String;
       }
     } else {
       _date = widget.selectedDate;
@@ -44,7 +43,6 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
       _endTime = TimeOfDay.now().replacing(hour: TimeOfDay.now().hour + 1);
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -139,10 +137,11 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
                 children: [
                   Expanded(
                     child: Text(
-                      'Location: ${_locationCoords != null ? '${_locationCoords!.latitude}, ${_locationCoords!.longitude}' : 'Not set'}',
+                      'Location: ${_locationName ?? 'Not set'}',
                       style: TextStyle(fontSize: 16),
                     ),
                   ),
+
                   ElevatedButton(
                     onPressed: () async {
                       final result = await Navigator.push(
@@ -152,6 +151,7 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
                       if (result != null) {
                         setState(() {
                           _locationCoords = result['coords'];
+                          _locationName = result['name'];
                         });
                       }
                     },
@@ -159,6 +159,7 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
                   ),
                 ],
               ),
+
               SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
@@ -172,9 +173,9 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
                       endTime: DateTime(_date.year, _date.month, _date.day, _endTime.hour, _endTime.minute),
                       // location: _locationName,
                       // You might need to extend CalendarEventData to include locationCoords
-                    event: _locationCoords != null
-                        ? {'latitude': _locationCoords!.latitude, 'longitude': _locationCoords!.longitude}
-                        : null,
+                      event: _locationName != null
+                          ? {'latitude': _locationCoords!.latitude, 'longitude': _locationCoords!.longitude, 'name':  _locationName}
+                          : null,
                     );
 
                     if (widget.eventToEdit != null) {
