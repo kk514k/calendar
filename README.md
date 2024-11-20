@@ -14,6 +14,8 @@ Before running the code, please follow the steps below to set up your environmen
    - Install the Flutter extension for VS Code from the Visual Studio Marketplace:  
      [Flutter Extension for VS Code](https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter).
 
+     https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter
+
 3. **Create a New Flutter Project**
    - Open VS Code and press `Ctrl + Shift + P`.
    - Type `Flutter: New Project` and select it.
@@ -43,4 +45,5 @@ Before running the code, please follow the steps below to set up your environmen
 
 - For a detailed walkthrough on installing Flutter, refer to the YouTube video:  
   [How to install Flutter on Windows 2024 | Setup Android Studio for Flutter Step by Step](https://www.youtube.com/watch?v=mMeQhLGD-og).
-  https://www.youtube.com/watch?v=mMeQhLGD-og
+
+   https://www.youtube.com/watch?v=mMeQhLGD-og
