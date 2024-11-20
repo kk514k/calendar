@@ -43,3 +43,4 @@ Before running the code, please follow the steps below to set up your environmen
 
 - For a detailed walkthrough on installing Flutter, refer to the YouTube video:  
   [How to install Flutter on Windows 2024 | Setup Android Studio for Flutter Step by Step](https://www.youtube.com/watch?v=mMeQhLGD-og).
+  https://www.youtube.com/watch?v=mMeQhLGD-og
